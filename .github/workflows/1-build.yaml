@@ -11,16 +11,12 @@ jobs:
       id: date
       run: echo "date=$(date +'%Y%m.%d.%H%M')" >> $GITHUB_ENV
 
-  checkout: 
-    runs-on: [self-hosted, dev]
-    steps: 
-    - name: Check out code
-      uses: actions/checkout@v3
-
   build:
     needs: [versioning]
     runs-on: [self-hosted, dev]
     steps: 
+    - name: Check out code
+      uses: actions/checkout@v3
     - name: Build image using buildah
       run: | 
         buildah bud /home/runner/_work/vue-quickstart/vue_quickstart/Dockerfile \
@@ -29,7 +25,7 @@ jobs:
         -t quay.io/andygodish/vue-quickstart:${{ needs.get-version.outputs.version }}
 
   push:
-    needs: [versioning]
+    needs: [versioning, build]
     runs-on: [self-hosted, dev]
     steps: 
     - name: Push image
