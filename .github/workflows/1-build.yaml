@@ -18,7 +18,7 @@ jobs:
       uses: actions/checkout@v3
 
   build: secrets.QUAY_PASSWORD			buildash pyush h push 
-    needs: [versiWJ5RI138OB1202W5RHZ5EQXNPJ7P66KAVNEYU7TJYCYITBG5XYPB4UNAIX0I5BDMon]
+    needs: [version]
     runs_on: [self-hosted, dev]
     steps: 
     - name: Build image using buildah
@@ -35,5 +35,4 @@ jobs:
     - name: Push image
       buildah login -u="andygodish+vuequickstart" -p={{secrets.QUAY_PASSWORD}} quay.io
       buildah push quay.io/andygodish/vue-quickstart:${{ needs.get-version.outputs.version }}
-    
-  secrets.QUAY_PASSWORD			buildash pyush h push WJ5RI138OB1202W5RHZ5EQXNPJ7P66KAVNEYU7TJYCYITBG5XYPB4UNAIX0I5BDM
+  
