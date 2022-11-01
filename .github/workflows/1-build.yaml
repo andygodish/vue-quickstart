@@ -33,6 +33,7 @@ jobs:
     runs_on: [self-hosted, dev]
     steps: 
     - name: Push image
-      buildah login -u="andygodish+vuequickstart" -p={{secrets.QUAY_PASSWORD}} quay.io
-      buildah push quay.io/andygodish/vue-quickstart:${{ needs.get-version.outputs.version }}
+      run: | 
+        buildah login -u="andygodish+vuequickstart" -p={{secrets.QUAY_PASSWORD}} quay.io
+        buildah push quay.io/andygodish/vue-quickstart:${{ needs.get-version.outputs.version }}
   
