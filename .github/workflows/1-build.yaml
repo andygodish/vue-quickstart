@@ -18,7 +18,7 @@ jobs:
       uses: actions/checkout@v3
 
   build:
-    needs: [version]
+    needs: [versioning]
     runs_on: [self-hosted, dev]
     steps: 
     - name: Build image using buildah
@@ -29,7 +29,7 @@ jobs:
         -t quay.io/andygodish/vue-quickstart:${{ needs.get-version.outputs.version }}
 
   push:
-    needs: [version]
+    needs: [versioning]
     runs_on: [self-hosted, dev]
     steps: 
     - name: Push image
