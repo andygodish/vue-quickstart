@@ -22,7 +22,7 @@ jobs:
         buildah bud /home/runner/_work/vue-quickstart/vue_quickstart/Dockerfile \
         --format docker \
         --tls-verify=false \ 
-        -t quay.io/andygodish/vue-quickstart:${{ needs.get-version.outputs.version }}
+        -t quay.io/andygodish/vue-quickstart:${{ needs.versioning.outputs.version }}
 
   push:
     needs: [versioning, build]
