@@ -28,6 +28,6 @@ jobs:
     steps: 
     - name: Push image
       run: | 
-        buildah login -u="andygodish+vuequickstart" -p={{secrets.QUAY_PASSWORD}} quay.io
+        buildah login -u="andygodish+vuequickstart" -p=${{ secrets.QUAY_PASSWORD }} quay.io
         buildah push quay.io/andygodish/vue-quickstart:${{ needs.versioning.outputs.version }}
   
