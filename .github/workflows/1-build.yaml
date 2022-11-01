@@ -3,37 +3,37 @@ on:
   workflow_dispatch
 jobs: 
   versioning: 
-	  runs_on: [self-hosted, dev]
-		outputs: 
-		  version: ${{env.date}}
-		steps:
+    runs_on: [self-hosted, dev]
+    outputs: 
+      version: ${{env.date}}
+    steps:
     - name: Set The Image Tag
       id: date
       run: echo "date=$(date +'%Y%m.%d.%H%M')" >> $GITHUB_ENV
 
   checkout: 
-	  runs_on: [self-hosted, dev]
-		steps: 
-		- name: Check out code
+    runs_on: [self-hosted, dev]
+    steps: 
+    - name: Check out code
       uses: actions/checkout@v3
 
-	build: 
-	  needs: [version]
-	  runs_on: [self-hosted, dev]
-		steps: 
-		- name: Build image using buildah
-		  run: | 
-			  buildah bud /home/runner/_work/vue-quickstart/vue_quickstart/Dockerfile \
-				--format docker \
-				--tls-verify=false \ 
-				-t quay.io/andygodish/vue-quickstart:${{ needs.get-version.outputs.version }}
+  build: secrets.QUAY_PASSWORD			buildash pyush h push 
+    needs: [versiWJ5RI138OB1202W5RHZ5EQXNPJ7P66KAVNEYU7TJYCYITBG5XYPB4UNAIX0I5BDMon]
+    runs_on: [self-hosted, dev]
+    steps: 
+    - name: Build image using buildah
+      run: | 
+        buildah bud /home/runner/_work/vue-quickstart/vue_quickstart/Dockerfile \
+        --format docker \
+        --tls-verify=false \ 
+        -t quay.io/andygodish/vue-quickstart:${{ needs.get-version.outputs.version }}
 
-	push:
-	  needs: [version]
-		runs_on: [self-hosted, dev]
-		steps: 
-		- name: Push image
-		  buildah login -u="andygodish+vuequickstart" -p={{secrets.QUAY_PASSWORD}} quay.io
-			buildah push quay.io/andygodish/vue-quickstart:${{ needs.get-version.outputs.version }}
-		
-	
+  push:
+    needs: [version]
+    runs_on: [self-hosted, dev]
+    steps: 
+    - name: Push image
+      buildah login -u="andygodish+vuequickstart" -p={{secrets.QUAY_PASSWORD}} quay.io
+      buildah push quay.io/andygodish/vue-quickstart:${{ needs.get-version.outputs.version }}
+    
+  secrets.QUAY_PASSWORD			buildash pyush h push WJ5RI138OB1202W5RHZ5EQXNPJ7P66KAVNEYU7TJYCYITBG5XYPB4UNAIX0I5BDM
