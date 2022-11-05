@@ -1,11 +1,12 @@
 name: build container image
-on: 
-  push:
-    branches: 
-    - main
+on:
+  workflow_dispatch
+#   push:
+#     branches: 
+#     - main
 jobs: 
   versioning: 
-    runs-on: [self-hosted, dev]
+    runs-on: [self-hosted, base, dev]
     outputs: 
       version: ${{env.date}}
     steps:
