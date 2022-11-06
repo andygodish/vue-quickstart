@@ -13,6 +13,7 @@ jobs:
         kubectl scale deployment buildah-runner --replicas 3
         
   versioning: 
+    needs: [scale-up]
     runs-on: [self-hosted, buildah, dev]
     outputs: 
       version: ${{env.date}}
@@ -42,6 +43,7 @@ jobs:
         buildah push quay.io/andygodish/vue-quickstart:${{ needs.versioning.outputs.version }}
   
   scale-down: 
+    needs: [push]
     runs-on: [self-hosted, base, dev]
     steps:
     - name: Scale deployment
