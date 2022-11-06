@@ -5,8 +5,15 @@ on:
 #     branches: 
 #     - main
 jobs: 
-  versioning: 
+  scale-up: 
     runs-on: [self-hosted, base, dev]
+    steps:
+    - name: Scale deployment
+      run: | 
+        kubectl scale deployment buildah-runner --replicas 3
+        
+  versioning: 
+    runs-on: [self-hosted, buildah, dev]
     outputs: 
       version: ${{env.date}}
     steps:
@@ -16,7 +23,7 @@ jobs:
 
   build:
     needs: [versioning]
-    runs-on: [self-hosted, dev]
+    runs-on: [self-hosted, buildah, dev]
     steps: 
     - name: Check out code
       uses: actions/checkout@v3
@@ -27,10 +34,17 @@ jobs:
 
   push:
     needs: [versioning, build]
-    runs-on: [self-hosted, dev]
+    runs-on: [self-hosted, buildah, dev]
     steps: 
     - name: Push image
       run: | 
         buildah login -u="andygodish+vuequickstart" -p=${{ secrets.QUAY_PASSWORD }} quay.io
         buildah push quay.io/andygodish/vue-quickstart:${{ needs.versioning.outputs.version }}
+  
+  scale-down: 
+    runs-on: [self-hosted, base, dev]
+    steps:
+    - name: Scale deployment
+      run: | 
+        kubectl scale deployment buildah-runner --replicas 0
   
